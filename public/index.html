@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Adventure Quest</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="notice" class="notice hidden" role="status"></div>
+
+  <!-- Join -->
+  <section id="view-welcome" class="view hidden">
+    <div class="card narrow">
+      <h1>Adventure Quest</h1>
+      <p class="subtitle">Gather a party. An AI Game Master awaits.</p>
+      <form id="join-form" autocomplete="off">
+        <label>Your name
+          <input name="name" maxlength="24" required placeholder="e.g. Jordan" />
+        </label>
+        <label>Character name
+          <input name="character" maxlength="30" required placeholder="e.g. Sable Thornwood" />
+        </label>
+        <label>Character concept
+          <textarea name="concept" maxlength="200" rows="3" required
+            placeholder="e.g. A soft-spoken elven archer who owes a debt to a river spirit"></textarea>
+        </label>
+        <label>Preferred party size
+          <select name="partySize">
+            <option>1</option><option>2</option><option>3</option><option selected>4</option>
+            <option>5</option><option>6</option><option>7</option><option>8</option>
+          </select>
+          <span class="hint">Used if you're the first one in the waiting room.</span>
+        </label>
+        <label id="access-row" class="hidden">Access code
+          <input name="accessCode" maxlength="64" />
+        </label>
+        <p id="join-error" class="error hidden"></p>
+        <button type="submit" class="primary">Enter the waiting room</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Waiting room -->
+  <section id="view-lobby" class="view hidden">
+    <div class="card narrow">
+      <h1>The Waiting Room</h1>
+      <p class="subtitle" id="lobby-count"></p>
+      <ul id="lobby-players" class="lobby-players"></ul>
+      <p class="hint">The adventure begins automatically when the party is full, or anyone can start now with whoever is here.</p>
+      <div class="row">
+        <button id="lobby-start" class="primary">Begin the adventure now</button>
+        <button id="lobby-leave" class="ghost">Leave</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Game -->
+  <section id="view-game" class="view hidden">
+    <header class="game-header">
+      <h1>Adventure Quest</h1>
+      <span id="round" class="round"></span>
+      <button id="leave-game" class="ghost small">Leave adventure</button>
+    </header>
+    <div class="game-body">
+      <main id="story" class="story" aria-live="polite"></main>
+      <aside class="sidebar">
+        <h2>The Party</h2>
+        <div id="party"></div>
+        <form id="chat-form" class="chat-form">
+          <input name="text" maxlength="300" placeholder="Table talk (the GM can't hear this)" />
+          <button class="small">Say</button>
+        </form>
+      </aside>
+    </div>
+    <footer id="controls" class="controls"></footer>
+  </section>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
